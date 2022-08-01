@@ -1,5 +1,22 @@
 # Ejemplo de aplicación con microservicios que implementa distintas arquitecturas de bases de datos
 
+En este repo se encuentra el jdl para generar una aplicación orientada a microservicios con Jhipster.
+La aplicación consiste en un gateway, dos microservicios llamados pozos y acciones, un registry y un servidor de base de datos.
+
+El microservicio pozos cuenta con tres entidades principales
+* Pozo
+* Nota
+* CambioestadoExplotacion
+
+El microservicio acciones cuenta con dos entidades principales
+* Accion
+* cambioEstadoGestion
+
+El siguiente diagrama muestra las relaciones entre las entidades
+
+
+![Diagrama de relaciones entre las entidades](https://raw.githubusercontent.com/mari967/jhipster-microservicio-bd-imp/main/application.png)
+
 ## 0. Requisitos
 Se debe tener instalado lo siguiente:
 1. Docker
