@@ -3,8 +3,8 @@
 ## Levantar el registry
 1. Levantar el servicio de docker 
 `dockerd`
-2.Levantar el registry. Ir a la capreta del gateway
-`docker-compose -f src/main/docker/jhipster-registry.yml up`
+2. Levantar el registry. Ir a la capreta del gateway
+`docker compose -f src/main/docker/jhipster-registry.yml up`
 
 
 ## Levantar la base de datos postgres ocn docker
