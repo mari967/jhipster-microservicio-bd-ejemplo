@@ -1,0 +1,120 @@
+application {
+    config {
+        baseName gateway
+        applicationType gateway
+        packageName com.nttdata.example.gateway
+        serviceDiscoveryType eureka
+        authenticationType session
+        prodDatabaseType postgresql
+        cacheProvider hazelcast
+        clientFramework react
+        testFrameworks [cucumber]
+    }
+    entities *
+}
+
+
+application {
+    config {
+        baseName pozos
+        applicationType microservice
+        packageName com.nttdata.example.pozos
+        serviceDiscoveryType eureka
+        authenticationType session
+        prodDatabaseType postgresql
+        serverPort 8081
+        skipUserManagement true
+    }
+    entities Pozo, Nota, CambioEstadoExplotacion
+}
+
+application {
+    config {
+        baseName acciones
+        applicationType microservice
+        packageName com.nttdata.example.acciones
+        serviceDiscoveryType eureka
+        authenticationType session
+        prodDatabaseType postgresql
+        serverPort 8082
+        skipUserManagement true
+    }
+    entities Accion, CambioEstadoGestion
+}
+
+// Entities for Pozos microservice ---------------------------------------------
+/** Well */
+entity Pozo {
+    uwi BigDecimal unique required 
+    fluido Double
+    seco Double
+    gas Double
+    sistemaExtraccion SistemaExtraccion 
+}
+
+/** Well's note */
+entity Nota {
+    fecha Instant
+    nota String required maxlength(500)
+}
+
+enum EstadoExplotacion {
+    BIEN_EXPLOTADO, SUBEXPLOTADO, ABANDONADO, EN_RIESGO
+}
+
+enum SistemaExtraccion {
+    BOMBEO_MECANICO, ELECTROSUMERGIBLE, PCP, PLUNGER_LIFT, SURGENTE, GAS_LIFT
+}
+
+entity CambioEstadoExplotacion {
+    fecha Instant
+    estadoExplotacion EstadoExplotacion
+    justificacion String required maxlength(500)
+}
+
+relationship OneToMany {
+    /* Pozos microservice */
+    Pozo{nota} to Nota{pozo(uwi) required},
+    Pozo{cambioEstadoExplotacion} to CambioEstadoExplotacion{pozo(uwi) required}
+}
+
+// relationship ManyToOne {
+//      /* Pozos microservice */
+//     CambioEstadoExplotacion{user(login) required} to User,
+//     Nota{user(login) required} to User
+// }
+
+paginate Pozo with pagination
+service Pozo with serviceClass
+microservice Pozo, Nota, CambioEstadoExplotacion with pozos
+
+// Entities for Acciones microservice  ---------------------------------------------------------
+entity Accion {
+    tipo String maxlength(100) required
+    clase String maxlength(100) required
+    descripcion String maxlength(100) required
+}
+
+entity CambioEstadoGestion {
+    justificacion String required
+    fecha Instant required
+    estadoGestion EstadoGestion
+}
+
+enum EstadoGestion {
+    PENDIENTE, FINALIZADA, EN_CURSO, CANCELADA
+}
+
+relationship OneToMany {
+    /* Acciones microservice */
+    Accion to CambioEstadoGestion{accion}
+}
+
+// relationship ManyToOne {
+//      /* Acciones microservice */
+//      CambioEstadoGestion{user(login)} to User
+// }
+
+paginate Accion with pagination
+service Accion with serviceClass
+microservice Accion, CambioEstadoGestion with acciones

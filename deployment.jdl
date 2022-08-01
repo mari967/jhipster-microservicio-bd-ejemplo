@@ -1,0 +1,4 @@
+deployment {
+  deploymentType docker-compose
+  appsFolders [acciones, pozos, gateway]
+}
