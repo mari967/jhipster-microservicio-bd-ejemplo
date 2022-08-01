@@ -1,9 +1,15 @@
 # Ejemplo de aplicación con microservicios que implementa distintas arquitecturas de bases de datos
 
+## 0. Requisitos
+Se debe tener instalado lo siguiente:
+1. Docker
+2. Docker compose
+3. Jhipster
+
 ## 1. Generar el proyecto
 1. Luego de clonar el repo, ejecutar en el directorio raíz 
 `jhipster jdl application.jdl`
-2. Una vez generado el proyecto, editar los archivos de configuración application-prod.yml de cada archivo.
+2. Una vez generado el proyecto, editar los archivos de configuración application-prod.yml de cada servicio.
 
 Para el gateway
 ```
@@ -29,9 +35,9 @@ Para el microservicio pozos
 ```
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    #url: jdbc:postgresql://localhost:5432/db-per-service-example?currentSchema=pozos #Base de datos por servicio. Esquemas diferentes
+    url: jdbc:postgresql://localhost:5432/pozos #Base de datos por servicio
     #url: jdbc:postgresql://localhost:5432/shared-database-example #Base de datos compartida
-    url: jdbc:postgresql://localhost:5432/pozos #Base de datos por servicio 
+    #url: jdbc:postgresql://localhost:5432/db-per-service-example?currentSchema=pozos #Base de datos por servicio. Esquemas diferentes
     username: admin
     password: admin
 ```
@@ -40,9 +46,9 @@ Para el microservicio acciones
 ```
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    #url: jdbc:postgresql://localhost:5432/db-per-service-example?currentSchema=acciones 
-    #url: jdbc:postgresql://localhost:5432/shared-database-example #Base de datos compartida
-    url: jdbc:postgresql://localhost:5432/acciones #Base de datos por servicio #Base de datos por servicio. Esquemas diferentes
+    url: jdbc:postgresql://localhost:5432/acciones #Base de datos por servicio #Base de datos por servicio
+    #url: jdbc:postgresql://localhost:5432/shared-database-example #Base de datos compartida    
+    #url: jdbc:postgresql://localhost:5432/db-per-service-example?currentSchema=acciones #Base de datos por servicio. Esquemas diferentes
     username: admin
     password: admin
 ```
