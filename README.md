@@ -29,7 +29,7 @@ Se debe tener instalado lo siguiente:
 2. Una vez generado el proyecto, editar los archivos de configuración application-prod.yml de cada servicio.
 
 Para el gateway
-```
+```yml
   liquibase:
     contexts: prod
     url: jdbc:postgresql://localhost:5432/gateway #Base de datos por servicio
@@ -49,7 +49,7 @@ Para el gateway
 ```
 
 Para el microservicio pozos
-```
+```yml
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/pozos #Base de datos por servicio
@@ -60,7 +60,7 @@ Para el microservicio pozos
 ```
 
 Para el microservicio acciones
-```
+```yml
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/acciones #Base de datos por servicio #Base de datos por servicio
