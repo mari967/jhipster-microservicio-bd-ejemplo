@@ -19,9 +19,9 @@ El siguiente diagrama muestra las relaciones entre las entidades
 
 ## 0. Requisitos
 Se debe tener instalado lo siguiente:
-1. Docker
-2. Docker compose
-3. Jhipster
+1. Docker 20.10.17
+2. Docker compose 2.6.0
+3. Jhipster 7.8.1
 
 ## 1. Generar el proyecto
 1. Luego de clonar el repo, ejecutar en el directorio raíz\
@@ -115,29 +115,37 @@ DROP DATABASE acciones;
 1. En las carpetas de los microservicios y el gateway ejecutar este comando\
 `./mvnw -Pprod`
 ## 5. Cambiando la arquitectura de base de datos de la aplicación
-Por defecto, la aplicación que genera jhipster usa una arquitectura de base de datos en la que cada microservicio tiene una propia. Es por esto que fue necesario crear las de cada aplicación en un paso anterior.
+Por defecto, la aplicación que genera jhipster usa una arquitectura de base de datos en la que cada microservicio tiene una propia.
 
 Para utilizar otras arquitecturas, se deben modificar los archivos applicaction-prod.yml de cada aplicación, como indica a continuación, según la arquitectura a implementar. 
 
+Tener en cuenta que en el gateway la url de conexión debe ser la misma en las propiedades de liquibase y en r2dbc.
+
 ### Base de datos compartida
 
-1. Descomentar esta línea en los archivos applicaction-prod.yml de cada aplicación.\
+1. Descomentar esta línea en los archivos applicaction-prod.yml de cada microservicio (pozos, acciones).\
 `url: jdbc:postgresql://localhost:5432/shared-database-example`
-3. Descomentar esta línea en el archivo applicaction-prod.yml del gateway\
+2. Descomentar esta línea en el archivo applicaction-prod.yml del gateway, en las propiedades de liquibase\
 `url: jdbc:postgresql://localhost:5432/shared-database-example `\
+3. Descomentar esta línea en el archivo applicaction-prod.yml del gateway, en las propiedades de r2dbc\
+`url: r2dbc:postgresql://localhost:5432/shared-database-example`\
 NOTA: La aplicación utiliza la base de datos *shared-database-example*
 
 ### Base de datos por microservicio con esquemas por servicio
-1. Descomentar esta línea en los archivos applicaction-prod.yml de cada aplicación.\
+1. Descomentar esta línea en los archivos applicaction-prod.yml de cada microservicio (pozos, acciones).\
 `url: jdbc:postgresql://localhost:5432/db-per-service-example?currentSchema=<nombre_esquema>`
-2. Descomentar esta línea en el archivo applicaction-prod.yml del gateway\
+2. Descomentar esta línea en el archivo applicaction-prod.yml del gateway, en las propiedades de liquibase\
 `url: jdbc:postgresql://localhost:5432/db-per-service-example?currentSchema=gateway `\
+3. Descomentar esta línea en el archivo applicaction-prod.yml del gateway, en las propiedades de r2dbc\
+`url: r2dbc:postgresql://localhost:5432/db-per-service-example?currentSchema=gateway`\
 NOTA: La aplicación utiliza la base de datos *db-per-service-example* y los esquemas *pozos, acciones y gateway*
 
 ### Base de datos por servicio
 
-1. Descomentar esta línea en los archivos applicaction-prod.yml de cada aplicación.\
+1. Descomentar esta línea en los archivos applicaction-prod.yml de cada microservicio (pozos, acciones).\
 `url: jdbc:postgresql://localhost:5432/<nombre_aplicación>`
-2. Descomentar esta línea en el archivo applicaction-prod.yml del gateway\
-`url: jdbc:postgresql://localhost:5432/gateway `\
+2. Descomentar esta línea en el archivo applicaction-prod.yml del gateway, en las propiedades de liquibase\
+`url: jdbc:postgresql://localhost:5432/gateway`\
+3. Descomentar esta línea en el archivo applicaction-prod.yml del gateway, en las propiedades de r2dbc\
+`url: r2dbc:postgresql://localhost:5432/gateway`\
 NOTA: La aplicación utiliza las bases de datos *acciones, pozos y gateway*
