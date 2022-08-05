@@ -79,12 +79,10 @@ Para el microservicio acciones
 
 
 ## 3. Levantar la base de datos postgres con docker
-1. Descargar la imagen de postgres\
-`docker pull postgres`
-2. Levantar el contenedor\
+1. Levantar el contenedor. El comando docker run también descarga la imagen si no la encuentra\
 `docker run --name postgresql -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5432:5432 -v /data:/var/lib/postgresql/data -d postgres`
-3. Conectarse a la base de datos con un gestor como DBeaver. En database dejar en blanco. El usuario es *admin* y la contraseña *admin*
-4. En DBeaver ejecutar el siguiente script
+2. Conectarse a la base de datos con un gestor como DBeaver. En database dejar en blanco. El usuario es *admin* y la contraseña *admin*
+3. En DBeaver ejecutar el siguiente script
 ```sql
 
 CREATE DATABASE "shared-database-example";
@@ -95,7 +93,7 @@ CREATE DATABASE "db-per-service-example";
 
 ```
 
-5. Conectarse a la base de datos *db-per-service-example* y crear los esquemas con el siguiente script
+4. Conectarse a la base de datos *db-per-service-example* y crear los esquemas con el siguiente script
 ```sql
 CREATE SCHEMA gateway;
 CREATE SCHEMA pozos;
